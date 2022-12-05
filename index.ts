@@ -8,24 +8,17 @@ const produceResponse = () =>
 
 const fakeDelayedRequest = () => produceResponse();
 
-const write = (response) => {
+const writ = (response) => {
   if (response) {
-    console.log(`IS: ${response}`);
+    console.log(`ISo: ${response}`);
     document.open();
     document.write(response);
   }
 };
 
 const poll = of({}).pipe(
-  mergeMap((_) =>
-    fakeDelayedRequest().pipe(
-      catchError((e) => {
-        console.error(e);
-        return of(false);
-      })
-    )
-  ),
-  tap(write),
+  mergeMap((_) => fakeDelayedRequest()),
+  tap(writ),
   delay(1000),
 
   repeat()
